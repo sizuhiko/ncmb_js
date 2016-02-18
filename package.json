@@ -51,15 +51,22 @@
   "devDependencies": {
     "beefy": "^2.1.5",
     "chai": "^2.1.0",
+    "cson": "^3.0.2",
     "coveralls": "^2.11.4",
     "event-stream": "^3.3.0",
     "glob":"^5.0.0",
     "gulp": "^3.9.1",
     "gulp-rename": "^1.2.2",
+    "hjson": "^1.7.6",
+    "iced-coffee-script": "^108.0.9",
     "istanbul": "^0.3.14",
+    "js-yaml": "^3.5.3",
     "mocha": "^2.1.0",
+    "properties": "^1.2.1",
     "stubcell": "^0.8.0",
-    "vinyl-source-stream": "^1.1.0"
+    "toml": "^2.3.0",
+    "vinyl-source-stream": "^1.1.0",
+    "yaml": "^0.2.3"
   },
   "scripts": {
     "test": "nohup npm run stub:start & sleep 5 && NODE_ENV=test mocha -R list test/**_test.js && npm run cov:80 && npm run stub:stop",
