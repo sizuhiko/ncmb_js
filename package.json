@@ -52,12 +52,18 @@
     "beefy": "^2.1.5",
     "chai": "^2.1.0",
     "coveralls": "^2.11.4",
+    "event-stream": "^3.3.0",
+    "glob":"^5.0.0",
+    "gulp": "^3.9.1",
+    "gulp-rename": "^1.2.2",
     "istanbul": "^0.3.14",
     "mocha": "^2.1.0",
-    "stubcell": "^0.8.0"
+    "stubcell": "^0.8.0",
+    "vinyl-source-stream": "^1.1.0"
   },
   "scripts": {
     "test": "nohup npm run stub:start & sleep 5 && NODE_ENV=test mocha -R list test/**_test.js && npm run cov:80 && npm run stub:stop",
+    "test:build": "gulp browserify",
     "coverage": "NODE_ENV=test istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec test/**_test.js && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "coverage_": "nohup npm run stub:start & sleep 5 && NODE_ENV=test istanbul cover _mocha -- -R spec test/**_test.js && npm run stub:stop",
     "cov:80": "npm run coverage 2>&1 | grep Lines | perl -nle 'my ($l, $c, $p, @d) = split(/[\\s%]+/); exit(($p > 80) == 0)'",
@@ -65,5 +71,9 @@
     "build": "browserify -r -p licensify -t [ uglifyify --keep-fname -x .js ] -o ncmb.min.js lib/ncmb.js",
     "stub:start": "stubcell -e test/mbaas.yml --basepath test/stub -p 18000",
     "stub:stop": "kill `ps aux | grep stubc[e]ll | awk '{print $2}'`"
+  },
+  "browser": {
+    "chai": "./node_modules/chai/lib/chai.js",
+    "mocha": "./node_modules/mocha/lib/mocha.js"
   }
 }
