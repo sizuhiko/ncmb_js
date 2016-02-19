@@ -21,7 +21,7 @@ describe("NCMB ACL", function(){
     expect(aclObj.toJSON()).to.be.eql({"*":{read: true}});
   });
 
-  (typeof window !== "undefined" ? describe.skip : describe)("権限をプロパティで指定し、取得できる", function() {
+  describe("権限をプロパティで指定し、取得できる", function() {
     beforeEach(function(){
       aclObj = new ncmb.Acl();
     });
