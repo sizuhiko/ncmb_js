@@ -51,26 +51,17 @@
   "devDependencies": {
     "beefy": "^2.1.5",
     "chai": "^2.1.0",
-    "cson": "^3.0.2",
     "coveralls": "^2.11.4",
-    "event-stream": "^3.3.0",
-    "glob":"^5.0.0",
-    "gulp": "^3.9.1",
-    "gulp-rename": "^1.2.2",
-    "hjson": "^1.7.6",
-    "iced-coffee-script": "^108.0.9",
     "istanbul": "^0.3.14",
-    "js-yaml": "^3.5.3",
     "mocha": "^2.1.0",
-    "properties": "^1.2.1",
-    "stubcell": "^0.8.0",
-    "toml": "^2.3.0",
-    "vinyl-source-stream": "^1.1.0",
-    "yaml": "^0.2.3"
+    "lodash-cli": "^4.5.0",
+    "stubcell": "^0.8.0"
   },
   "scripts": {
     "test": "nohup npm run stub:start & sleep 5 && NODE_ENV=test mocha -R list test/**_test.js && npm run cov:80 && npm run stub:stop",
-    "test:build": "gulp browserify",
+    "test:testfile:build": "cat test/**_test.js |sed -e '/require(.*)/d' -e '/use strict/d' > test/frontend/ncmb_test.js",
+    "test:modules:build": "lodash -o test/frontend/lodash.js && cat node_modules/mocha/mocha.js node_modules/chai/chai.js test/frontend/lodash.min.js > test/frontend/test_modules.js",
+    "test:build": "npm run test:modules:build && npm run test:testfile:build && cat test/frontend/test_modules.js test/frontend/module_setup.js test/frontend/ncmb_test.js test/frontend/test_run.js > test/frontend/ncmb_test.full.js",
     "coverage": "NODE_ENV=test istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec test/**_test.js && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "coverage_": "nohup npm run stub:start & sleep 5 && NODE_ENV=test istanbul cover _mocha -- -R spec test/**_test.js && npm run stub:stop",
     "cov:80": "npm run coverage 2>&1 | grep Lines | perl -nle 'my ($l, $c, $p, @d) = split(/[\\s%]+/); exit(($p > 80) == 0)'",
@@ -78,9 +69,5 @@
     "build": "browserify -r -p licensify -t [ uglifyify --keep-fname -x .js ] -o ncmb.min.js lib/ncmb.js",
     "stub:start": "stubcell -e test/mbaas.yml --basepath test/stub -p 18000",
     "stub:stop": "kill `ps aux | grep stubc[e]ll | awk '{print $2}'`"
-  },
-  "browser": {
-    "chai": "./node_modules/chai/lib/chai.js",
-    "mocha": "./node_modules/mocha/lib/mocha.js"
   }
 }
