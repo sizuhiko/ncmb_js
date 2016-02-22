@@ -12,7 +12,8 @@ describe("NCMB ACL", function(){
       .set("protocol", config.apiserver.protocol || "http:")
       .set("fqdn", config.apiserver.fqdn)
       .set("port", config.apiserver.port)
-      .set("proxy", config.apiserver.port || "");
+      .set("proxy", config.apiserver.port || "")
+      .set("stub", config.apiserver.stub);
   }
 
   var aclObj = null;
